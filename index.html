@@ -4,109 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GooningClips - Local Player</title>
+    <title>GooningClips - Contenido Protegido</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #0f0f0f;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #0f0f0f;
-            padding: 20px 5%;
-            border-bottom: 1px solid #222;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        header h1 {
-            color: #ffffff;
-            margin: 0;
-            font-size: 28px;
-            text-transform: lowercase;
-            letter-spacing: -1px;
-            font-weight: bold;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 5%;
-        }
-
-        .main-player-wrapper {
-            width: 100%;
-            max-width: 1100px;
-            background-color: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            margin-bottom: 40px;
-        }
-
-        #mainPlayer {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            display: block;
-        }
-
-        .video-title-display {
-            padding: 15px 0;
-            width: 100%;
-            max-width: 1100px;
-            border-bottom: 1px solid #333;
-            margin-bottom: 30px;
-        }
-
-        .video-title-display h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 500;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .video-item {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background: #1a1a1a;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .video-item:hover {
-            transform: translateY(-5px);
-            background: #252525;
-        }
-
-        .preview-video {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            pointer-events: none;
-            object-fit: cover;
-            background: #000;
-        }
-
-        .item-info {
-            padding: 12px;
-        }
-
-        .item-info h3 {
-            margin: 0;
-            font-size: 16px;
-            color: #efefef;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0f0f0f; color: white; margin: 0; padding: 0; }
+        header { background-color: #0f0f0f; padding: 20px 5%; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+        header h1 { color: #ffffff; margin: 0; font-size: 28px; text-transform: lowercase; letter-spacing: -1px; font-weight: bold; }
+        .container { display: flex; flex-direction: column; align-items: center; padding: 20px 5%; }
+        .main-player-wrapper { width: 100%; max-width: 1100px; background-color: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.7); margin-bottom: 40px; }
+        #mainPlayer { width: 100%; aspect-ratio: 16 / 9; display: block; }
+        .video-title-display { padding: 15px 0; width: 100%; max-width: 1100px; border-bottom: 1px solid #333; margin-bottom: 30px; }
+        .video-title-display h2 { margin: 0; font-size: 22px; font-weight: 500; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; width: 100%; max-width: 1200px; }
+        .video-item { cursor: pointer; transition: transform 0.3s ease; background: #1a1a1a; border-radius: 8px; overflow: hidden; position: relative; }
+        .video-item:hover { transform: translateY(-5px); background: #252525; }
+        .preview-video { width: 100%; aspect-ratio: 16 / 9; pointer-events: none; object-fit: cover; background: #000; }
+        .item-info { padding: 12px; }
+        .item-info h3 { margin: 0; font-size: 16px; color: #efefef; }
+        /* Aviso de bloqueo */
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; font-size: 24px; }
     </style>
 </head>
 <body>
@@ -117,10 +32,9 @@
 
     <div class="container">
         <div class="main-player-wrapper">
-            <h2>look this video to know how to use mi page - Mira este video para saber como funciona mi pagina si tienes problemas</h1>
+            <h2>looks this tutorial of how to use my page - mira este tutorial para saber como funciona mi pagina</h2>
             <video id="mainPlayer" controls>
                 <source src="5.mp4" type="video/mp4">
-                Tu navegador no soporta el formato de video.
             </video>
         </div>
 
@@ -128,64 +42,92 @@
             <h2 id="currentTitle">videos</h2>
         </div>
 
-        <div class="video-grid" id="videoList">
+        <div class="video-grid">
             <!-- Video 5 -->
-            <div class="video-item" onclick="verificarYReproducir('5.mp4', 'Video 5')">
-                <video class="preview-video" muted preload="metadata">
-                    <source src="5.mp4" type="video/mp4">
-                </video>
-                <div class="item-info">
-                    <h3>luna snow</h3>
-                </div>
+            <div class="video-item" onclick="gestionarAcceso('5.mp4', 'Video 5')">
+                <video class="preview-video" muted preload="metadata"><source src="5.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 5</h3></div>
             </div>
-
             <!-- Video 6 -->
-            <div class="video-item" onclick="verificarYReproducir('6.mp4', 'Video 6')">
-                <video class="preview-video" muted preload="metadata">
-                    <source src="6.mp4" type="video/mp4">
-                </video>
-                <div class="item-info">
-                    <h3>Video 6</h3>
-                </div>
+            <div class="video-item" onclick="gestionarAcceso('6.mp4', 'Video 6')">
+                <video class="preview-video" muted preload="metadata"><source src="6.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 6</h3></div>
+            </div>
+            <!-- Video 7 -->
+            <div class="video-item" onclick="gestionarAcceso('7.mp4', 'Video 7')">
+                <video class="preview-video" muted preload="metadata"><source src="7.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 7</h3></div>
             </div>
 
-            <!-- Video 7 -->
-            <div class="video-item" onclick="verificarYReproducir('7.mp4', 'Video 7')">
-                <video class="preview-video" muted preload="metadata">
-                    <source src="7.mp4" type="video/mp4">
-                </video>
-                <div class="item-info">
-                    <h3>sue</h3>
-                </div>
+            <div class="video-item" onclick="gestionarAcceso('8.mp4', 'Video 8')">
+                <video class="preview-video" muted preload="metadata"><source src="8.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 8</h3></div>
             </div>
+            <div class="video-item" onclick="gestionarAcceso('9.mp4', 'Video 9')">
+                <video class="preview-video" muted preload="metadata"><source src="9.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 9</h3></div>
+            </div>
+            <div class="video-item" onclick="gestionarAcceso('10.mp4', 'Video 10')">
+                <video class="preview-video" muted preload="metadata"><source src="10.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 10</h3></div>
+            </div>
+            <div class="video-item" onclick="gestionarAcceso('11.mp4', 'Video 11')">
+                <video class="preview-video" muted preload="metadata"><source src="11.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 11</h3></div>
+            </div>
+            <div class="video-item" onclick="gestionarAcceso('12.mp4', 'Video 12')">
+                <video class="preview-video" muted preload="metadata"><source src="12.mp4" type="video/mp4"></video>
+                <div class="item-info"><h3>Video 12</h3></div>
+            </div>
+
         </div>
     </div>
 
     <script>
+        const linkAnuncio = "https://exe.io/AcMflB7p";
         const mainPlayer = document.getElementById('mainPlayer');
         const currentTitle = document.getElementById('currentTitle');
-        const linkAnuncio = "https://adfly.cloud/VaEE8";
 
-        // Función principal con lógica de contador
-        function verificarYReproducir(archivo, titulo) {
-            // Obtenemos el contador actual del almacenamiento del navegador
-            // Si no existe, empezamos en 0
+        // LÓGICA DE VERIFICACIÓN AL CARGAR LA PÁGINA
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Si el usuario regresa con ?status=ok, desbloqueamos
+            if (urlParams.get('status') === 'ok') {
+                localStorage.setItem('bloqueado', 'false');
+                // Limpiamos la URL para que no se vea el ?status=ok
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        };
+
+        function gestionarAcceso(archivo, titulo) {
+            // 1. Verificar si tiene un bloqueo pendiente (no completó el anuncio anterior)
+            const estaBloqueado = localStorage.getItem('bloqueado') === 'true';
+
+            if (estaBloqueado) {
+                // Si está bloqueado, lo mandamos directo al anuncio otra vez
+                window.location.href = linkAnuncio;
+                return;
+            }
+
+            // 2. Lógica del ciclo de 3 videos (1 ad -> 2 videos libres)
             let contador = parseInt(localStorage.getItem('videoClicks')) || 0;
 
             if (contador === 0) {
-                // PRIMER CLIC: Redirigir y actualizar contador a 1
+                // Toca ver anuncio. Marcamos como bloqueado hasta que regrese con el link correcto.
+                localStorage.setItem('bloqueado', 'true');
                 localStorage.setItem('videoClicks', 1);
                 window.location.href = linkAnuncio;
             } 
-            else if (contador === 1) {
-                // SEGUNDO CLIC: Reproducir y actualizar a 2
-                localStorage.setItem('videoClicks', 2);
+            else {
+                // Reproducir video
                 reproducirVideo(archivo, titulo);
-            } 
-            else if (contador === 2) {
-                // TERCER CLIC: Reproducir y REINICIAR contador a 0
-                localStorage.setItem('videoClicks', 0);
-                reproducirVideo(archivo, titulo);
+                
+                // Actualizar contador para el ciclo
+                if (contador === 1) {
+                    localStorage.setItem('videoClicks', 2);
+                } else {
+                    localStorage.setItem('videoClicks', 0); // Reinicia ciclo
+                }
             }
         }
 
@@ -196,16 +138,15 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // Vista previa al pasar el mouse
-        const previews = document.querySelectorAll('.video-item');
-        previews.forEach(item => {
+        // Vista previa rápida al pasar mouse
+        document.querySelectorAll('.video-item').forEach(item => {
             const vid = item.querySelector('video');
             item.addEventListener('mouseenter', () => vid.play());
-            item.addEventListener('mouseleave', () => {
-                vid.pause();
-                vid.currentTime = 0;
-            });
+            item.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
         });
     </script>
+
+    
+
 </body>
 </html>
