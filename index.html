@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GooningClips - Local Player</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #0f0f0f;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0f0f0f;
+            padding: 20px 5%;
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            text-transform: lowercase;
+            letter-spacing: -1px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 5%;
+        }
+
+        .main-player-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            margin-bottom: 40px;
+        }
+
+        #mainPlayer {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+        }
+
+        .video-title-display {
+            padding: 15px 0;
+            width: 100%;
+            max-width: 1100px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+
+        .video-title-display h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .video-item {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            background: #252525;
+        }
+
+        .preview-video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            pointer-events: none;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .item-info {
+            padding: 12px;
+        }
+
+        .item-info h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #efefef;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>gooningclips</h1>
+    </header>
+
+    <div class="container">
+        <div class="main-player-wrapper">
+            <h2>look this video to know how to use mi page - Mira este video para saber como funciona mi pagina si tienes problemas</h1>
+            <video id="mainPlayer" controls>
+                <source src="5.mp4" type="video/mp4">
+                Tu navegador no soporta el formato de video.
+            </video>
+        </div>
+
+        <div class="video-title-display">
+            <h2 id="currentTitle">videos</h2>
+        </div>
+
+        <div class="video-grid" id="videoList">
+            <!-- Video 5 -->
+            <div class="video-item" onclick="verificarYReproducir('5.mp4', 'Video 5')">
+                <video class="preview-video" muted preload="metadata">
+                    <source src="5.mp4" type="video/mp4">
+                </video>
+                <div class="item-info">
+                    <h3>luna snow</h3>
+                </div>
+            </div>
+
+            <!-- Video 6 -->
+            <div class="video-item" onclick="verificarYReproducir('6.mp4', 'Video 6')">
+                <video class="preview-video" muted preload="metadata">
+                    <source src="6.mp4" type="video/mp4">
+                </video>
+                <div class="item-info">
+                    <h3>Video 6</h3>
+                </div>
+            </div>
+
+            <!-- Video 7 -->
+            <div class="video-item" onclick="verificarYReproducir('7.mp4', 'Video 7')">
+                <video class="preview-video" muted preload="metadata">
+                    <source src="7.mp4" type="video/mp4">
+                </video>
+                <div class="item-info">
+                    <h3>sue</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mainPlayer = document.getElementById('mainPlayer');
+        const currentTitle = document.getElementById('currentTitle');
+        const linkAnuncio = "https://adfly.cloud/VaEE8";
+
+        // Función principal con lógica de contador
+        function verificarYReproducir(archivo, titulo) {
+            // Obtenemos el contador actual del almacenamiento del navegador
+            // Si no existe, empezamos en 0
+            let contador = parseInt(localStorage.getItem('videoClicks')) || 0;
+
+            if (contador === 0) {
+                // PRIMER CLIC: Redirigir y actualizar contador a 1
+                localStorage.setItem('videoClicks', 1);
+                window.location.href = linkAnuncio;
+            } 
+            else if (contador === 1) {
+                // SEGUNDO CLIC: Reproducir y actualizar a 2
+                localStorage.setItem('videoClicks', 2);
+                reproducirVideo(archivo, titulo);
+            } 
+            else if (contador === 2) {
+                // TERCER CLIC: Reproducir y REINICIAR contador a 0
+                localStorage.setItem('videoClicks', 0);
+                reproducirVideo(archivo, titulo);
+            }
+        }
+
+        function reproducirVideo(archivo, titulo) {
+            mainPlayer.src = archivo;
+            currentTitle.innerText = "Reproduciendo: " + titulo;
+            mainPlayer.play();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Vista previa al pasar el mouse
+        const previews = document.querySelectorAll('.video-item');
+        previews.forEach(item => {
+            const vid = item.querySelector('video');
+            item.addEventListener('mouseenter', () => vid.play());
+            item.addEventListener('mouseleave', () => {
+                vid.pause();
+                vid.currentTime = 0;
+            });
+        });
+    </script>
+</body>
+</html>
